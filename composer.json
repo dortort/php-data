@@ -1,0 +1,29 @@
+{
+    "name": "dortort/php-data",
+    "description": "",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Francis Eytan Dortort",
+            "email": "francis@dortort.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "mockery/mockery": "^0.9.4",
+        "phpunit/phpunit": "^4.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Data\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Data\\Tests\\": "tests/"
+        }
+    }
+}
