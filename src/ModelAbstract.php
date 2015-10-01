@@ -2,14 +2,14 @@
 
 namespace Data;
 
-abstract class ModelAbstract
+abstract class ModelAbstract implements ModelInterface
 {
-    public function getAttributes()
+    public function getAttributes($filter = null)
     {
         return [];
     }
 
-    public function getRelationships()
+    public function getRelationships($filter = null)
     {
         return [];
     }
