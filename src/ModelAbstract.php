@@ -4,6 +4,8 @@ namespace Data;
 
 abstract class ModelAbstract implements ModelInterface
 {
+    protected $_data;
+
     public function getAttributes($filter = null)
     {
         return [];
