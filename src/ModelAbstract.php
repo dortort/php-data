@@ -6,6 +6,13 @@ abstract class ModelAbstract implements ModelInterface
 {
     protected $_data;
 
+    protected $_dirty = [];
+
+    public function isDirty()
+    {
+        return (0 < count($this->_dirty));
+    }
+
     public function getAttributes($filter = null)
     {
         return [];
