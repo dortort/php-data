@@ -27,11 +27,15 @@ abstract class ModelAbstract implements ModelInterface
 
     public function get($key)
     {
-
+        return $this->getDataValue($key);
     }
 
     public function set($key, $value)
     {
+        if (in_array($this->getRootKey($key), $this->getAttributes())) {
+            $this->setDataValue($key, $value);
+        }
+
         return $this;
     }
 
@@ -57,6 +61,11 @@ abstract class ModelAbstract implements ModelInterface
         return '[' . str_replace('.', '][', $path) . ']';
     }
 
+    protected function getRootKey($key)
+    {
+        return preg_replace('/\..*$/', '', $key);
+    }
+
     protected function getDataValue($key)
     {
         $accessor = self::getPropertyAccessor();
@@ -76,7 +85,7 @@ abstract class ModelAbstract implements ModelInterface
 
         $path = $this->inflectAccessorPath($key);
 
-        $accessor->setValue($this->_dirty, $path);
+        $accessor->setValue($this->_dirty, $path, $value);
 
         return $this;
     }
