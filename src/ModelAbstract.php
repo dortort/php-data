@@ -90,7 +90,7 @@ abstract class ModelAbstract implements ModelInterface
         return $this;
     }
 
-    static protected function getPropertyAccessor()
+    protected static function getPropertyAccessor()
     {
         static $accessor;
 
