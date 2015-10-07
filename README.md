@@ -1,4 +1,4 @@
-## PHP\DATA [![Build Status](https://travis-ci.org/dortort/php-data.svg)](https://travis-ci.org/dortort/php-data) [![Code Coverage](https://scrutinizer-ci.com/g/dortort/php-data/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/dortort/php-data/?branch=master)
+## PHP\DATA [![Build Status](https://travis-ci.org/dortort/php-data.svg)](https://travis-ci.org/dortort/php-data) [![Code Coverage](https://scrutinizer-ci.com/g/dortort/php-data/badges/coverage.png?b=integration)](https://scrutinizer-ci.com/g/dortort/php-data/?branch=integration)
 
 ### Requirements
 
