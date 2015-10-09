@@ -3,6 +3,7 @@
 namespace Data;
 
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Doctrine\Common\Inflector\Inflector;
 
 abstract class ModelAbstract implements ModelInterface
 {
@@ -25,15 +26,15 @@ abstract class ModelAbstract implements ModelInterface
         return [];
     }
 
-    public function get($key)
+    public function get($attribute)
     {
-        return $this->getDataValue($key);
+        return $this->getDataValue($attribute);
     }
 
-    public function set($key, $value)
+    public function set($attribute, $value)
     {
-        if (in_array($this->getRootKey($key), $this->getAttributes())) {
-            $this->setDataValue($key, $value);
+        if (in_array($this->getRootAttribute($attribute), $this->getAttributes())) {
+            $this->setDataValue($attribute, $value);
         }
 
         return $this;
@@ -41,19 +42,19 @@ abstract class ModelAbstract implements ModelInterface
 
     public function __get($key)
     {
-        $key = $this->inflectKey($key);
-        $this->get($key);
+        $attribute = $this->inflectKey($key);
+        $this->get($attribute);
     }
 
     public function __set($key, $value)
     {
-        $key = $this->inflectKey($key);
-        $this->set($key, $value);
+        $attribute = $this->inflectKey($key);
+        $this->set($attribute, $value);
     }
 
     protected function inflectKey($key)
     {
-        return $key;
+        return Inflector::tableize($key);
     }
 
     protected function inflectAccessorPath($path)
@@ -61,16 +62,16 @@ abstract class ModelAbstract implements ModelInterface
         return '[' . str_replace('.', '][', $path) . ']';
     }
 
-    protected function getRootKey($key)
+    protected function getRootAttribute($attribute)
     {
-        return preg_replace('/\..*$/', '', $key);
+        return preg_replace('/\..*$/', '', $attribute);
     }
 
-    protected function getDataValue($key)
+    protected function getDataValue($attribute)
     {
         $accessor = self::getPropertyAccessor();
 
-        $path = $this->inflectAccessorPath($key);
+        $path = $this->inflectAccessorPath($attribute);
 
         if ($accessor->isReadable($this->_dirty, $path)) {
             return $accessor->getValue($this->_dirty, $path);
@@ -79,11 +80,11 @@ abstract class ModelAbstract implements ModelInterface
         return $accessor->getValue($this->_data, $path);
     }
 
-    protected function setDataValue($key, $value)
+    protected function setDataValue($attribute, $value)
     {
         $accessor = self::getPropertyAccessor();
 
-        $path = $this->inflectAccessorPath($key);
+        $path = $this->inflectAccessorPath($attribute);
 
         $accessor->setValue($this->_dirty, $path, $value);
 
