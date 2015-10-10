@@ -14,7 +14,7 @@ class ModelAbstractTest extends \PHPUnit_Framework_TestCase
 
         $this->model->expects($this->any())
                     ->method('getAttributes')
-                    ->willReturn(['attr']);
+                    ->willReturn(['attr', 'attr-one', 'attr-two']);
     }
 
     public function testGetSetSimpleValue()
@@ -42,6 +42,17 @@ class ModelAbstractTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($this->model, $this->model->set('fakeattr.nested', 'val'));
         $this->assertEquals(null, $this->model->get('fakeattr.nested'));
+    }
+
+    public function testGetSetMagicMethods()
+    {
+        $this->assertEquals(null, $this->model->get('attr-one'));
+        $this->model->attrOne = 'val';
+        $this->assertEquals('val', $this->model->get('attr-one'));
+
+        $this->assertEquals(null, $this->model->attrTwo);
+        $this->model->set('attr-two', 'val');
+        $this->assertEquals('val', $this->model->attrTwo);
     }
 
     protected function tearDown()

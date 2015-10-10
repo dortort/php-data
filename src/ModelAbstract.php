@@ -3,7 +3,7 @@
 namespace Data;
 
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Doctrine\Common\Inflector\Inflector;
+use Stringy\StaticStringy as Stringy;
 
 abstract class ModelAbstract implements ModelInterface
 {
@@ -43,7 +43,7 @@ abstract class ModelAbstract implements ModelInterface
     public function __get($key)
     {
         $attribute = $this->inflectKey($key);
-        $this->get($attribute);
+        return $this->get($attribute);
     }
 
     public function __set($key, $value)
@@ -54,7 +54,7 @@ abstract class ModelAbstract implements ModelInterface
 
     protected function inflectKey($key)
     {
-        return Inflector::tableize($key);
+        return (string) Stringy::dasherize($key);
     }
 
     protected function inflectAccessorPath($path)
