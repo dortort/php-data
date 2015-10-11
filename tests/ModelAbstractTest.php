@@ -9,6 +9,7 @@ class ModelAbstractTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->model = $this->getMockBuilder('\\Data\\ModelAbstract')
+                            ->setConstructorArgs([new \Data\Store])
                             ->setMethods(['getAttributes'])
                             ->getMockForAbstractClass();
 

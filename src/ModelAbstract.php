@@ -7,9 +7,31 @@ use Stringy\StaticStringy as Stringy;
 
 abstract class ModelAbstract implements ModelInterface
 {
+    protected $_store;
+
+    protected $_id;
+
     protected $_data;
 
     protected $_dirty = [];
+
+    public function __construct(Store $store, $id = null, array $data = null)
+    {
+        $this->_store = $store;
+
+        if (null === $id) {
+            $this->_id = $store->generateIdForModel($this->getModelName(), $data);
+            $this->_data = [];
+        } else {
+            $this->_id = $id;
+            $this->_data = $data;
+        }
+    }
+
+    public function getModelName()
+    {
+        return substr(strrchr(get_class($this), '\\'), 1);
+    }
 
     public function isDirty()
     {
