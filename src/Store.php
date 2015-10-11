@@ -16,8 +16,13 @@ class Store
         // return $cursor;
     }
 
-    public function generateIdForModel($modelName, $data)
+    public function generateIdForModel(/* $modelName, $data */)
     {
         return Uuid::uuid4()->toString();
+    }
+
+    public function fetchData(/* $modelName, $id */)
+    {
+        return [];
     }
 }

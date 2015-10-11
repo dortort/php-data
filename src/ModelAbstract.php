@@ -28,11 +28,21 @@ abstract class ModelAbstract implements ModelInterface
         }
     }
 
+    /**
+     * Return name for record type.
+     *
+     * @return string
+     */
     public function getModelName()
     {
         return substr(strrchr(get_class($this), '\\'), 1);
     }
 
+    /**
+     * Has changed, unsaved attributes?
+     *
+     * @return boolean
+     */
     public function isDirty()
     {
         return (0 < count($this->_dirty));
@@ -48,11 +58,27 @@ abstract class ModelAbstract implements ModelInterface
         return [];
     }
 
+    /**
+     * Get model attribute.
+     *
+     * @param  string $attribute Attribute name.
+     * @return mixed             Attribute's value.
+     */
     public function get($attribute)
     {
+        if ('id' === $attribute) {
+            return $this->_id;
+        }
+
         return $this->getDataValue($attribute);
     }
 
+    /**
+     * Update model attribute value.
+     *
+     * @param string $attribute Attribute name.
+     * @param mixed $value      Attribute's value.
+     */
     public function set($attribute, $value)
     {
         if (in_array($this->getRootAttribute($attribute), $this->getAttributes())) {
@@ -99,7 +125,15 @@ abstract class ModelAbstract implements ModelInterface
             return $accessor->getValue($this->_dirty, $path);
         }
 
-        return $accessor->getValue($this->_data, $path);
+        if (!is_array($this->_data) && method_exists($this, 'hydrate')) {
+            $this->hydrate();
+        }
+
+        if ($accessor->isReadable($this->_data, $path)) {
+            return $accessor->getValue($this->_data, $path);
+        }
+
+        return null;
     }
 
     protected function setDataValue($attribute, $value)
@@ -118,7 +152,9 @@ abstract class ModelAbstract implements ModelInterface
         static $accessor;
 
         if (!isset($accessor)) {
-            $accessor = PropertyAccess::createPropertyAccessor();
+            $accessor = PropertyAccess::createPropertyAccessorBuilder()
+                                            ->enableExceptionOnInvalidIndex()
+                                            ->getPropertyAccessor();
         }
 
         return $accessor;
