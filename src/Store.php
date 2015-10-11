@@ -2,6 +2,8 @@
 
 namespace Data;
 
+use Ramsey\Uuid\Uuid;
+
 class Store
 {
     public function find($modelName, $id, $options)
@@ -9,8 +11,13 @@ class Store
         // return $model;
     }
 
-    public function query($modelName, $query) 
+    public function query($modelName, $query)
     {
         // return $cursor;
+    }
+
+    public function generateIdForModel($modelName, $data)
+    {
+        return Uuid::uuid4()->toString();
     }
 }
