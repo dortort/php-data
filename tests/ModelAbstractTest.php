@@ -8,14 +8,25 @@ class ModelAbstractTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        $data = [
+            'old-attr' => 'old-val'
+        ];
+
         $this->model = $this->getMockBuilder('\\Data\\ModelAbstract')
-                            ->setConstructorArgs([new \Data\Store])
+                            ->setConstructorArgs([new \Data\Store, 123, $data])
                             ->setMethods(['getAttributes'])
                             ->getMockForAbstractClass();
 
         $this->model->expects($this->any())
                     ->method('getAttributes')
-                    ->willReturn(['attr', 'attr-one', 'attr-two']);
+                    ->willReturn(['attr', 'old-attr', 'attr-one', 'attr-two']);
+    }
+
+    public function testGetSetOldValue()
+    {
+        $this->assertEquals('old-val', $this->model->get('old-attr'));
+        $this->assertEquals($this->model, $this->model->set('old-attr', 'new-val'));
+        $this->assertEquals('new-val', $this->model->get('old-attr'));
     }
 
     public function testGetSetSimpleValue()
