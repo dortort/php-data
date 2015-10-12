@@ -110,6 +110,15 @@ abstract class ModelAbstract implements ModelInterface
         return '[' . str_replace('.', '][', $path) . ']';
     }
 
+    protected function ensureData()
+    {
+        if (!is_array($this->_data)) {
+            $this->_data = [];
+        }
+
+        return $this;
+    }
+
     protected function getRootAttribute($attribute)
     {
         return preg_replace('/\..*$/', '', $attribute);
@@ -125,9 +134,7 @@ abstract class ModelAbstract implements ModelInterface
             return $accessor->getValue($this->_dirty, $path);
         }
 
-        if (!is_array($this->_data) && method_exists($this, 'hydrate')) {
-            $this->hydrate();
-        }
+        $this->ensureData();
 
         if ($accessor->isReadable($this->_data, $path)) {
             return $accessor->getValue($this->_data, $path);
