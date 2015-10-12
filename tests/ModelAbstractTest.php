@@ -74,6 +74,7 @@ class ModelAbstractTest extends \PHPUnit_Framework_TestCase
                       ->setMethods(['getAttributes'])
                       ->getMockForAbstractClass();
 
+        $this->assertInternalType('string', $model->id);
         $this->assertEquals(null, $model->get('attr'));
     }
 
