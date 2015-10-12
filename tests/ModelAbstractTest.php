@@ -67,6 +67,16 @@ class ModelAbstractTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('val', $this->model->attrTwo);
     }
 
+    public function testCreateNewModel()
+    {
+        $model = $this->getMockBuilder('\\Data\\ModelAbstract')
+                      ->setConstructorArgs([new \Data\Store])
+                      ->setMethods(['getAttributes'])
+                      ->getMockForAbstractClass();
+
+        $this->assertEquals(null, $model->get('attr'));
+    }
+
     protected function tearDown()
     {
         $this->model = null;
