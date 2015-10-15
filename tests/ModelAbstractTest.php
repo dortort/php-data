@@ -14,12 +14,16 @@ class ModelAbstractTest extends \PHPUnit_Framework_TestCase
 
         $this->model = $this->getMockBuilder('\\Data\\ModelAbstract')
                             ->setConstructorArgs([new \Data\Store, 123, $data])
-                            ->setMethods(['getAttributes'])
+                            ->setMethods(['getAttributes', 'getRelationships'])
                             ->getMockForAbstractClass();
 
         $this->model->expects($this->any())
                     ->method('getAttributes')
                     ->willReturn(['attr', 'old-attr', 'attr-one', 'attr-two']);
+
+        $this->model->expects($this->any())
+                    ->method('getRelationships')
+                    ->willReturn(['child' => 'Child']);
     }
 
     public function testGetSetOldValue()
@@ -65,6 +69,11 @@ class ModelAbstractTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(null, $this->model->attrTwo);
         $this->model->set('attr-two', 'val');
         $this->assertEquals('val', $this->model->attrTwo);
+    }
+
+    public function testGetToOneRelationship()
+    {
+        $this->assertEquals(null, $this->model->child);
     }
 
     public function testCreateModelWithoutData()
