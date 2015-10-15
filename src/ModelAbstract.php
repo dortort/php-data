@@ -70,7 +70,23 @@ abstract class ModelAbstract implements ModelInterface
             return $this->_id;
         }
 
-        return $this->getDataValue($attribute);
+        $value = $this->getDataValue($attribute);
+        $relationships = $this->getRelationships();
+
+        if (isset($relationships[$attribute])) {
+            $store = $this->_store;
+            $modelName = $relationships[$attribute];
+
+            if (is_array($value)) {
+                return array_map(function($id) use ($store, $modelName) {
+                    return $store->find($modelName, $id);
+                }, $value);
+            } else {
+                return $store->find($modelName, $value);
+            }
+        }
+
+        return $value;
     }
 
     /**

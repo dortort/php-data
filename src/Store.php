@@ -6,7 +6,7 @@ use Ramsey\Uuid\Uuid;
 
 class Store
 {
-    public function find($modelName, $id, $options)
+    public function find($modelName, $id, $options = [])
     {
         // return $model;
     }
