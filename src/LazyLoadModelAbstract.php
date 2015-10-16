@@ -15,7 +15,7 @@ abstract class LazyLoadModelAbstract extends ModelAbstract
 
     protected function hydrate()
     {
-        $this->_data = $this->_store->fetchData($this->getModelName(), $this->_id);
+        $this->_data = $this->_store->fetchRecord($this->getModelName(), $this->_id);
 
         return $this;
     }

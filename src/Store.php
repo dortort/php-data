@@ -21,8 +21,23 @@ class Store
         return Uuid::uuid4()->toString();
     }
 
-    public function fetchData(/* $modelName, $id */)
+    public function fetchRecord(/* $modelName, $id */)
     {
         return [];
+    }
+
+    public function createRecord($modelName, $id, array $data = [])
+    {
+        // return $data;
+    }
+
+    public function updateRecord($modelName, $id, array $data)
+    {
+        // return $data;
+    }
+
+    public function deleteRecord($modelName, $id)
+    {
+        // return true;
     }
 }
