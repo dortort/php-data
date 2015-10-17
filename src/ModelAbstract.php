@@ -129,8 +129,15 @@ abstract class ModelAbstract implements ModelInterface
     protected function ensureData()
     {
         if (!is_array($this->_data)) {
-            $this->_data = [];
+            $this->hydrate();
         }
+
+        return $this;
+    }
+
+    protected function hydrate()
+    {
+        $this->_data = $this->_store->fetchRecord($this->getModelName(), $this->_id);
 
         return $this;
     }
