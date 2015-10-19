@@ -2,7 +2,7 @@
 
 namespace Data;
 
-use Stringy\StaticStringy as Stringy;
+use Doctrine\Common\Inflector\Inflector;
 
 trait MongoStoreTrait
 {
@@ -27,6 +27,8 @@ trait MongoStoreTrait
 
     protected function getCollection($modelName)
     {
-        return $this->_db->selectCollection($modelName);
+        $collection = Inflector::pluralize($key);
+
+        return $this->_db->selectCollection($collection);
     }
 }

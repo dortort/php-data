@@ -3,7 +3,7 @@
 namespace Data;
 
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Stringy\StaticStringy as Stringy;
+use Doctrine\Common\Inflector\Inflector;
 
 abstract class ModelAbstract implements ModelInterface
 {
@@ -118,7 +118,7 @@ abstract class ModelAbstract implements ModelInterface
 
     protected function inflectKey($key)
     {
-        return (string) Stringy::dasherize($key);
+        return strtr(Inflector::tableize($key), '_', '-');
     }
 
     protected function inflectAccessorPath($path)

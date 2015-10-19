@@ -12,8 +12,8 @@
     "require": {
         "php": ">=5.4",
         "symfony/property-access": "^2.7",
-        "danielstjules/stringy": "^2.1",
-        "ramsey/uuid": "^3.0"
+        "ramsey/uuid": "^3.0",
+        "doctrine/inflector": "^1.0"
     },
     "require-dev": {
         "mockery/mockery": "^0.9.4",
