@@ -27,7 +27,7 @@ trait MongoStoreTrait
 
     protected function getCollection($modelName)
     {
-        $collection = Inflector::pluralize($key);
+        $collection = Inflector::pluralize($modelName);
 
         return $this->_db->selectCollection($collection);
     }
