@@ -1,10 +1,10 @@
 
 install:
-	composer --no-interaction --prefer-source --dev install
+	composer --no-interaction --prefer-source install
 
 update:
 	composer update
 
 test:
-	phpunit tests
+	vendor/bin/phpunit tests
 

@@ -2,8 +2,9 @@
 
 namespace Data;
 
-use Symfony\Component\PropertyAccess\PropertyAccess;
+use Data\Exception\ReadonlyModelAttributeException;
 use Doctrine\Common\Inflector\Inflector;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 abstract class ModelAbstract implements ModelInterface
 {
@@ -97,6 +98,10 @@ abstract class ModelAbstract implements ModelInterface
      */
     public function set($attribute, $value)
     {
+        if ('id' === $attribute) {
+            throw new ReadonlyModelAttributeException('id');
+        }
+
         if (in_array($this->getRootAttribute($attribute), $this->getAttributes())) {
             $this->setDataValue($attribute, $value);
         }

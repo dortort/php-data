@@ -26,6 +26,12 @@ class ModelAbstractTest extends \PHPUnit_Framework_TestCase
                     ->willReturn(['child' => 'Child']);
     }
 
+    public function testSetIdValue()
+    {
+        $this->expectException(\Data\Exception\ReadonlyModelAttributeException::class);
+        $this->model->id = 'new-id';
+    }
+
     public function testGetSetOldValue()
     {
         $this->assertEquals('old-val', $this->model->get('old-attr'));
